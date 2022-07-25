@@ -58,7 +58,8 @@ ASSIGN_BUNDLE = True  # assign 1 ps and 1 worker for each in the beginning of ea
 """
 Hyper-parameters settings.
 """
-SL_LOSS_FUNCTION = "Cross_Entropy"  # or "Mean_Square", "Cross_Entropy", "Absolute_Difference"
+LOSS_FUNCS = ("Cross_Entropy", "Mean_Square", "Absolute_Difference")
+SL_LOSS_FUNCTION = LOSS_FUNCS[0]
 OPTIMIZER = "Adam"  # or RMSProp, etc.
 FIX_LEARNING_RATE = True  # keep constant learning rate
 ADJUST_LR_STEPS = [5000]  # halving learning rate once reaching a certain step, not functional
@@ -117,7 +118,7 @@ NUM_TS_PER_UPDATE = 1  # update once after passing x timeslot(s), default 1, i.e
 VARYING_PS_WORKER_RATIO = True  # explore different ratio of ps over worker
 STEP_TRAIN_CRITIC_NET = 0  # number of steps for pretraining critic network, default 0, not functional
 CHANGING_JOB_TYPES = False
-JOB_RESR_BALANCE = True
+JOB_RES_BALANCE = True
 FINE_GRAIN_JCT = True
 
 """
@@ -170,7 +171,7 @@ if TRAINING_MODE == "SL":
 
 PRIORITIES = ("Resource", "Arrival", "Progress")
 JOB_SORT_PRIORITY = PRIORITIES[1]  # or Arrival, Resource, Progress, sort job based on resource or arrival
-SCHED_WINDOW_SIZE = 20  # maximum allowed number of jobs for NN input
+SCHED_WINDOW_SIZE = 20  # maximum allowed number of jobs for NN inputs
 if LARGE_SCALE:
     SCHED_WINDOW_SIZE = 40
 PS_WORKER = True  # whether consider ps and worker tasks separately or not
@@ -194,13 +195,13 @@ else:
     ACTION_DIM = SCHED_WINDOW_SIZE + SKIP_TS
 
 INPUT_RESCALE = False  # not implemented on heuristic algorithms yet
-JOB_CENTRAL_REPRESENTATION = False  # treat each job as an input instead of treating each type of information of all jobs as an input
-ATTRIBUTE_CENTRAL_REPRESENTATION = False  # treat each property of all jobs as an input, default fully connected to input
-ZERO_PADDING = True  # how to represent `None job` as input
+JOB_CENTRAL_REPRESENTATION = False  # treat each job as an inputs instead of treating each type of information of all jobs as an inputs
+ATTRIBUTE_CENTRAL_REPRESENTATION = False  # treat each property of all jobs as an inputs, default fully connected to inputs
+ZERO_PADDING = True  # how to represent `None job` as inputs
 FIRST_LAYER_TANH = False
-NN_SHORTCUT_CONN = False  # connect the output of first layer to the NN layer before softmax output
+NN_SHORTCUT_CONN = False  # connect the outputs of first layer to the NN layer before softmax outputs
 if NN_SHORTCUT_CONN:
     assert JOB_CENTRAL_REPRESENTATION  # must enable JOB_CENTRAL_REPRESENTATION
 NUM_FCN_LAYERS = 2  # number of fully connected layers, must be > 0
-NUM_NEURONS_PER_FCN = STATE_DIM[0] * STATE_DIM[1] * 2 / 3  # default same number as input size
+NUM_NEURONS_PER_FCN = STATE_DIM[0] * STATE_DIM[1] * 2 / 3  # default same number as inputs size
 BATCH_NORMALIZATION = True

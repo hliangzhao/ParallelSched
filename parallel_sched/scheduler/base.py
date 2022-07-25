@@ -119,7 +119,7 @@ class Scheduler(object):
         self.rewards.append(reward)
 
     def observe(self):
-        # for test, first use dominant resource share of each job as input state
+        # for test, first use dominant resource share of each job as inputs state
         q = PriorityQueue()
         for job in self.uncompleted_jobs:
             if param.PS_WORKER:
@@ -168,9 +168,9 @@ class Scheduler(object):
 
                         elif inputs == "STAY":
                             if not param.INPUT_RESCALE:
-                                state[j][order] = self.cur_ts - job.arrv_time
+                                state[j][order] = self.cur_ts - job.arrive_time
                             else:
-                                state[j][order] = float(self.cur_ts - job.arrv_time) / 100
+                                state[j][order] = float(self.cur_ts - job.arrive_time) / 100
 
                         elif inputs == "PROGRESS":
                             state[j][order] = 1 - job.progress / job.num_epochs
